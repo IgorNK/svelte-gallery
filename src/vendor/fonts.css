@@ -1,0 +1,27 @@
+@font-face {
+  font-family: 'Alegreya';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./fonts/Alegreya/Alegreya-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Alegreya';
+  font-style: normal;
+  font-weight: 700;
+  src: url('./fonts/Alegreya/Alegreya-SemiBold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'PlayfairDisplay';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./fonts/PlayfairDisplay/PlayfairDisplay-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'PlayfairDisplay';
+  font-style: normal;
+  font-weight: 700;
+  src: url('./fonts/PlayfairDisplay/PlayfairDisplay-SemiBold.ttf') format('truetype');
+}

@@ -1,3 +1,9 @@
-body {
-  margin: 0;
+@import url(../vendor/normalize.css);
+@import url(../vendor/fonts.css);
+
+:root {
+  --blue: #124076;
+  --green: #7f9f80;
+  --yellow: #f9e897;
+  --orange: #FFC374;
 }
