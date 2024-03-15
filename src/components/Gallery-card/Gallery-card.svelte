@@ -1,18 +1,58 @@
 <script lang="ts">
-  export let image: string;
-  export let title: string;
-  export let info: string;
-  import "../../routes/index.css";
+  import GalleryImage from "../Gallery-image/Gallery-image.svelte";
+  import type { Image } from '../../types/image.type';
+  export let pair: Array<Image | null>;
+  enum Side {
+    Left,
+    Right
+  };
+  let selected: number = -1;
+  let getSide: (slected: Side | null) => string = (selected: Side | null) => {
+    let style: string;
+    switch (selected) {
+      case 0: {
+        style = "CardInfo-left";
+        break;
+      }
+      case 1: {
+        style = "CardInfo-right";
+        break;
+      }
+      default: {
+        style = "CardInfo-hidden";
+        break;
+      }
+    }
+    return style;
+  }
+  
 </script>
 
-<div class="GalleryCard">
-  <img class="GalleryCard-image" alt={image} src={image} />
-  <div class="GalleryCard-overlay" />
-  <div class="GalleryCard-container">
-    <a class="GalleryCard-title">{title}</a>
-    <p class="GalleryCard-info">{info}</p>
+<div 
+  role="img" 
+  class="GalleryCard"
+  on:mouseleave={() => {
+    selected = -1;
+    console.log(selected);
+  }}  
+>  
+  {#each pair as image, i (i)}    
+    {#if image !== null}
+      <GalleryImage 
+        {...image} 
+        on:mouseenter={() => {
+          selected = i;
+          console.log(selected);
+        }} 
+      />
+    {/if}      
+  {/each} 
+  <div class={getSide(selected)}>
+    <h3 class="CardInfo-title">
+      {selected !== -1 ? pair[selected].title : ""}
+    </h3>
   </div>
-</div>
+</div> 
 
 <style>
   .GalleryCard {
@@ -20,82 +60,49 @@
     height: 100%;
     position: relative;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     overflow: hidden;
   }
 
-  .GalleryCard-image {
+  .CardInfo-hidden {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    aspect-ratio: 1/0.75;
-    cursor: pointer;
-  }
-
-  .GalleryCard-container {
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-    padding: 10%;
-    padding-top: 50%;
     position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: center;
-    opacity: 0%;
-    transform: translate(50em, 0);
-  }
-
-  .GalleryCard:hover .GalleryCard-container {
-    opacity: 100%;
     transform: translate(0, 0);
-    transition: 0.6s ease-out;
+    background-color: rgba(0, 0, 0, 0.3);
+    transition: 1s ease-in-out;
+    pointer-events: none;
   }
 
-  .GalleryCard-title {
+  .CardInfo-left {
+    width: 50%;
+    height: 100%;
+    transform: translate(100%, 0);
+    position: absolute;
+    background-color: rgba(0, 0, 0, 1);
+    transition: 1s ease-in-out;
+    pointer-events: none;
+  }
+
+  .CardInfo-right {
+    width: 50%;
+    height: 100%;
+    transform: translate(0, 0);
+    position: absolute;
+    background-color: rgba(0, 0, 0, 1);
+    transition: 1s ease-in-out;
+    pointer-events: none;
+  }
+
+  .CardInfo-title {
     font-family: 'Alegreya', Arial, Helvetica, sans-serif;
+    color: #fff;
     font-weight: 700;
-    text-decoration: underline;
-    cursor: pointer;
-    color: #000;
     text-shadow: 6px 6px 20px #fff,
     -4px 2px 30px #fff;
     font-size: 24px;
     width: 100%;
     text-align: end;
   }
-
-  .GalleryCard-title:hover {
-    color: var(--blue);
-    transition: 0.4s ease-in-out;
-    text-shadow: 6px 6px 20px #ecee6a,
-    -4px 2px 30px #fff;
-  }
-
-  .GalleryCard-info {
-    font-family: 'Alegreya', Arial, Helvetica, sans-serif;
-    font-weight: 400;
-    font-size: 18px;
-    text-shadow: 3px 3px 20px #fff,
-    -2px 1px 30px #fff;
-    width: 100%;
-    text-align: end;
-  }
-
-  .GalleryCard-overlay {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    transform: translate(0, 0);
-    background-color: rgba(0.0, 0.0, 0.0, 0.5);
-  }
-
-  .GalleryCard:hover .GalleryCard-overlay {
-    background-color: rgba(0.0, 0.0, 0.0, 0.0);
-    transform: translate(-100%, 0);
-    transition: 0.6s ease-out;
-  }
-
 </style>

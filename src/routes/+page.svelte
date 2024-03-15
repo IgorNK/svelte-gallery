@@ -9,6 +9,6 @@
 	<meta name="description" content="Photo gallery" />
 </svelte:head>
 
-<Splash image={images[0].image}/>
+<Splash text="xeniya" image={images[0].image}/>
 <Gallery images={images} />
 
